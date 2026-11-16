@@ -28,6 +28,8 @@
   <div id="main" class="screen active">
     <h1 id="greeting">Привет!</h1>
     <button id="toProfile">Мой профиль</button>
+    <p>Нажатий: <span id="count">0</span></p>
+    <button id="clickBtn">+1</button>
   </div>
 
   <div id="profile" class="screen">
@@ -62,6 +64,16 @@
 
     document.getElementById("toProfile").onclick = function () { showScreen("profile"); };
     document.getElementById("toMain").onclick = function () { showScreen("main"); };
+
+    let count = Number(localStorage.getItem("count")) || 0;
+    const countEl = document.getElementById("count");
+    countEl.textContent = count;
+
+    document.getElementById("clickBtn").onclick = function () {
+      count++;
+      countEl.textContent = count;
+      localStorage.setItem("count", count);
+    };
   </script>
 </body>
 </html>
