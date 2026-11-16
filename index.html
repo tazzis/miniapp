@@ -34,6 +34,7 @@
     <img id="avatar" alt="Аватар">
     <h2 id="name"></h2>
     <p id="username"></p>
+    <p id="userId"></p>
     <button id="toMain">Назад</button>
   </div>
 
@@ -50,6 +51,7 @@
       if (user.photo_url) {
         document.getElementById("avatar").src = user.photo_url;
       }
+      document.getElementById("userId").textContent = "Your telegram ID is: " + user.id 
     }
 
     function showScreen(id) {
