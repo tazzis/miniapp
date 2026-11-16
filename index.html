@@ -2,16 +2,64 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Моя мини-апп</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: var(--tg-theme-bg-color);
+      color: var(--tg-theme-text-color);
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    #avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
-  <h1>I am a text</h1>
-  <button id="btn">Press me</button>
+
+  <div id="main" class="screen active">
+    <h1 id="greeting">Привет!</h1>
+    <button id="toProfile">Мой профиль</button>
+  </div>
+
+  <div id="profile" class="screen">
+    <img id="avatar" alt="Аватар">
+    <h2 id="name"></h2>
+    <p id="username"></p>
+    <button id="toMain">Назад</button>
+  </div>
 
   <script>
-    document.getElementById("btn").onclick = function () {
-      alert("ALERT!");
-    };
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    const user = tg.initDataUnsafe.user;
+
+    if (user) {
+      document.getElementById("greeting").textContent = "Привет, " + user.first_name + "!";
+      document.getElementById("name").textContent = user.first_name + " " + (user.last_name || "");
+      document.getElementById("username").textContent = user.username ? "@" + user.username : "";
+      if (user.photo_url) {
+        document.getElementById("avatar").src = user.photo_url;
+      }
+    }
+
+    function showScreen(id) {
+      document.getElementById("main").classList.remove("active");
+      document.getElementById("profile").classList.remove("active");
+      document.getElementById(id).classList.add("active");
+    }
+
+    document.getElementById("toProfile").onclick = function () { showScreen("profile"); };
+    document.getElementById("toMain").onclick = function () { showScreen("main"); };
   </script>
 </body>
 </html>
