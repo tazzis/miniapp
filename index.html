@@ -112,20 +112,29 @@
         showScreen("main");
       };
 
-      let count = Number(localStorage.getItem("count")) || 0;
+      let count = 0;
       const countEl = document.getElementById("count");
-      countEl.textContent = count;
 
-      document.getElementById("clickBtn").onclick = function () {
+      tg.CloudStorage.getItem("count", function (error, value) {
+        if (!error && value) {
+          count = Number(value);
+          countEl.textContent = count;
+        }
+      });
+
+      function addClick() {
         count++;
         countEl.textContent = count;
-        localStorage.setItem("count", count);
-      };
+        tg.CloudStorage.setItem("count", String(count));
+      }
+
+      document.getElementById("clickBtn").onclick = addClick;
+      tg.MainButton.onClick(addClick);
 
       document.getElementById("counterReset").onclick = function () {
         count = 0;
         countEl.textContent = count;
-        localStorage.setItem("count", count);
+        tg.CloudStorage.removeItem("count")
       };
     </script>
   </body>
