@@ -6,6 +6,14 @@
     <title>Моя мини-апп</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+      #version {
+        position: fixed;
+        top: 4px;
+        right: 8px;
+        font-size: 11px;
+        opacity: 0.5;
+      }
+
       body {
         font-family: sans-serif;
         text-align: center;
@@ -71,6 +79,27 @@
     </div>
 
     <script>
+      const APP_VERSION = "0.1.0";
+      document.getElementById("version").textContent = "v" + APP_VERSION;
+
+      fetch(location.pathname + "?t=" + Date.now(), { cache: "no-store" })
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (text) {
+          const match = text.match(/APP_VERSION = "(\d[^"]*)"/);
+          if (
+            match &&
+            match[1] !== APP_VERSION &&
+            location.search !== "?v=" + match[1]
+          ) {
+            location.replace(
+              location.pathname + "?v=" + match[1] + location.hash
+            );
+          }
+        })
+        .catch(function () {});
+
       const tg = window.Telegram.WebApp;
       tg.ready();
 
@@ -111,6 +140,7 @@
       const countEl = document.getElementById("count");
 
       tg.CloudStorage.getItem("count", function (error, value) {
+        <!--
         tg.showAlert(
           "версия: " +
             tg.version +
@@ -119,6 +149,7 @@
             "\nзначение: " +
             value
         );
+        -->
         if (!error && value) {
           count = Number(value);
           countEl.textContent = count;
@@ -141,4 +172,5 @@
       };
     </script>
   </body>
+  <div id="version"></div>
 </html>
