@@ -111,6 +111,14 @@
       const countEl = document.getElementById("count");
 
       tg.CloudStorage.getItem("count", function (error, value) {
+        tg.showAlert(
+          "версия: " +
+            tg.version +
+            "\nошибка: " +
+            error +
+            "\nзначение: " +
+            value
+        );
         if (!error && value) {
           count = Number(value);
           countEl.textContent = count;
