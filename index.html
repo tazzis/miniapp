@@ -1,86 +1,124 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Моя мини-апп</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 20px;
-      background: var(--tg-theme-bg-color);
-      color: var(--tg-theme-text-color);
-    }
-    .screen { display: none; }
-    .screen.active { display: block; }
-    #avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-  </style>
-</head>
-<body>
-
-  <div id="main" class="screen active">
-    <h1 id="greeting">Привет!</h1>
-    <button id="toProfile">Мой профиль</button>
-    <p>Нажатий: <span id="count">0</span></p>
-    <button id="clickBtn">+1</button>
-    <button id="counterReset">Reset</button>
-  </div>
-
-  <div id="profile" class="screen">
-    <img id="avatar" alt="Аватар">
-    <h2 id="name"></h2>
-    <p id="username"></p>
-    <p id="userId"></p>
-    <button id="toMain">Назад</button>
-  </div>
-
-  <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-
-    const user = tg.initDataUnsafe.user;
-
-    if (user) {
-      document.getElementById("greeting").textContent = "Привет, " + user.first_name + "!";
-      document.getElementById("name").textContent = user.first_name + " " + (user.last_name || "");
-      document.getElementById("username").textContent = user.username ? "@" + user.username : "";
-      if (user.photo_url) {
-        document.getElementById("avatar").src = user.photo_url;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Моя мини-апп</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+        padding: 20px;
+        background: var(--tg-theme-bg-color);
+        color: var(--tg-theme-text-color);
       }
-      document.getElementById("userId").textContent = "Your telegram ID is: " + user.id 
-    }
 
-    function showScreen(id) {
-      document.getElementById("main").classList.remove("active");
-      document.getElementById("profile").classList.remove("active");
-      document.getElementById(id).classList.add("active");
-    }
+      .screen {
+        display: none;
+      }
 
-    document.getElementById("toProfile").onclick = function () { showScreen("profile"); };
-    document.getElementById("toMain").onclick = function () { showScreen("main"); };
+      .screen.active {
+        display: block;
+      }
 
-    let count = Number(localStorage.getItem("count")) || 0;
-    const countEl = document.getElementById("count");
-    countEl.textContent = count;
+      #avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
 
-    document.getElementById("clickBtn").onclick = function () {
-      count++;
+      button {
+        background: var(--tg-theme-button-color);
+        color: var(--tg-theme-button-text-color);
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-size: 16px;
+        margin: 6px;
+        cursor: pointer;
+      }
+
+      #profile {
+        background: var(--tg-theme-secondary-bg-color);
+        border-radius: 16px;
+        padding: 24px;
+        margin-top: 20px;
+      }
+
+      #avatar {
+        border: 3px solid var(--tg-theme-button-color);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="main" class="screen active">
+      <h1 id="greeting">Привет!</h1>
+      <button id="toProfile">Мой профиль</button>
+      <p>Нажатий: <span id="count">0</span></p>
+      <button id="clickBtn">+1</button>
+      <button id="counterReset">Reset</button>
+    </div>
+
+    <div id="profile" class="screen">
+      <img id="avatar" alt="Аватар" />
+      <h2 id="name"></h2>
+      <p id="username"></p>
+      <p id="userId"></p>
+      <button id="toMain">Назад</button>
+    </div>
+
+    <script>
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+
+      const user = tg.initDataUnsafe.user;
+
+      if (user) {
+        document.getElementById("greeting").textContent =
+          "Привет, " + user.first_name + "!";
+        document.getElementById("name").textContent =
+          user.first_name + " " + (user.last_name || "");
+        document.getElementById("username").textContent = user.username
+          ? "@" + user.username
+          : "";
+        if (user.photo_url) {
+          document.getElementById("avatar").src = user.photo_url;
+        }
+        document.getElementById("userId").textContent =
+          "Your telegram ID is: " + user.id;
+      }
+
+      function showScreen(id) {
+        document.getElementById("main").classList.remove("active");
+        document.getElementById("profile").classList.remove("active");
+        document.getElementById(id).classList.add("active");
+      }
+
+      document.getElementById("toProfile").onclick = function () {
+        showScreen("profile");
+      };
+      document.getElementById("toMain").onclick = function () {
+        showScreen("main");
+      };
+
+      let count = Number(localStorage.getItem("count")) || 0;
+      const countEl = document.getElementById("count");
       countEl.textContent = count;
-      localStorage.setItem("count", count);
-    };
 
-    document.getElementById("counterReset").onclick = function () {
-      count = 0
-      countEl.textContent = count
-      localStorage.setItem("count", count)
-    }
-  </script>
-</body>
+      document.getElementById("clickBtn").onclick = function () {
+        count++;
+        countEl.textContent = count;
+        localStorage.setItem("count", count);
+      };
+
+      document.getElementById("counterReset").onclick = function () {
+        count = 0;
+        countEl.textContent = count;
+        localStorage.setItem("count", count);
+      };
+    </script>
+  </body>
 </html>
