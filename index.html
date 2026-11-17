@@ -62,6 +62,8 @@
   </head>
 
   <body>
+ <div id="version"></div>
+
     <div id="main" class="screen active">
       <h1 id="greeting">Привет!</h1>
       <button id="toProfile">Мой профиль</button>
@@ -140,17 +142,7 @@
       const countEl = document.getElementById("count");
 
       tg.CloudStorage.getItem("count", function (error, value) {
-        <!--
-        tg.showAlert(
-          "версия: " +
-            tg.version +
-            "\nошибка: " +
-            error +
-            "\nзначение: " +
-            value
-        );
-        -->
-        if (!error && value) {
+         if (!error && value) {
           count = Number(value);
           countEl.textContent = count;
         }
@@ -172,5 +164,4 @@
       };
     </script>
   </body>
-  <div id="version"></div>
 </html>
