@@ -76,11 +76,6 @@
 
       tg.MainButton.setText("+1");
       tg.MainButton.show();
-      tg.MainButton.onClick(function () {
-        count++;
-        countEl.textContent = count;
-        localStorage.setItem("count", count);
-      });
 
       const user = tg.initDataUnsafe.user;
 
@@ -134,7 +129,7 @@
       document.getElementById("counterReset").onclick = function () {
         count = 0;
         countEl.textContent = count;
-        tg.CloudStorage.removeItem("count")
+        tg.CloudStorage.removeItem("count");
       };
     </script>
   </body>
