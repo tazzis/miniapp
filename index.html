@@ -30,6 +30,7 @@
     <button id="toProfile">Мой профиль</button>
     <p>Нажатий: <span id="count">0</span></p>
     <button id="clickBtn">+1</button>
+    <button id="counterReset">Reset</button>
   </div>
 
   <div id="profile" class="screen">
@@ -74,6 +75,12 @@
       countEl.textContent = count;
       localStorage.setItem("count", count);
     };
+
+    document.getElementById("counterReset").onclick = function () {
+      count = 0
+      countEl.textContent = count
+      localStorage.setItem("count", count)
+    }
   </script>
 </body>
 </html>
