@@ -1,0 +1,52 @@
+/* ---------- base ---------- */
+body {
+  font-family: sans-serif;
+  text-align: center;
+  padding: 20px;
+  background: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+}
+
+#version {
+  position: fixed;
+  top: 4px;
+  right: 8px;
+  font-size: 11px;
+  opacity: 0.5;
+}
+
+/* ---------- screens ---------- */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+#profile {
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 20px;
+}
+
+/* ---------- components ---------- */
+button {
+  background: var(--tg-theme-button-color);
+  color: var(--tg-theme-button-text-color);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 16px;
+  margin: 6px;
+  cursor: pointer;
+}
+
+#avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--tg-theme-button-color);
+}
